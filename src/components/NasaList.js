@@ -21,7 +21,6 @@ const NasaList = () => {
     return (
         <div>
             <NasaCard title={nasaData.title} date={nasaData.date} explanation={nasaData.explanation} hdurl={nasaData.hdurl}/>
-            <p>Test</p>
             <div>
                 <select id="dropDown" onChange={() => setDateString(document.getElementById("dropDown").options[document.getElementById("dropDown").selectedIndex].value)}>
                     <option value="2012-03-14">2012-03-14</option>
