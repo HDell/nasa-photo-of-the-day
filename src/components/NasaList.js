@@ -4,11 +4,14 @@ import NasaCard from "./NasaCard";
 import axios from "axios";
 
 const NasaList = () => {
+    //NASA_API_KEY
+    let nasaKey = "Yk57Bo3O7f52aM0zljhQwFHgMOCNAVbVNh7NZmbW";
+
     //Date Setter
     let dateObj = new Date();
     let year = dateObj.getUTCFullYear();
     let month = dateObj.getUTCMonth() + 1; //months from 1-12
-    let day = dateObj.getUTCDate();
+    let day = dateObj.getUTCDate() - 1; //UTC 00:00 <=> 19:00 ET
     let formattedDate = year + "-" + month + "-" + day;
 
     //State
@@ -22,7 +25,7 @@ const NasaList = () => {
 
     //Side Effects
     useEffect(() => {
-        axios.get(`https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY&date=${dateString}`)
+        axios.get(`https://api.nasa.gov/planetary/apod?api_key=${nasaKey}&date=${dateString}`)
             .then((response) => {
                 console.log(response);
                 setNasaData(response.data);
@@ -78,7 +81,7 @@ const NasaList = () => {
                                 <option>11</option>
                                 <option>12</option>
                             </Input>
-                            <Label for="daySelect">Date</Label>
+                            <Label for="daySelect">Day</Label>
                             <Input type="select" name="select" id="daySelect">
                                 <option>1</option>
                                 <option>2</option>
@@ -120,7 +123,9 @@ const NasaList = () => {
                             month = monthElem.options[monthElem.selectedIndex].text;
                             day = dayElem.options[dayElem.selectedIndex].text;
                             formattedDate = year + "-" + month + "-" + day;
-                            datesList.push(formattedDate);
+                            if (!datesList.includes(formattedDate)) {
+                                datesList.push(formattedDate);
+                            }
                         }}>Add Date</Button>
                     </Form>
                     <br/>
